@@ -1,0 +1,1 @@
+Посилання на Figma https://www.figma.com/community/file/1187676718154727707
