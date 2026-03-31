@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/text_field.dart';
+import '../components/custom_button.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -62,29 +63,16 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 16),
               
               const CustomTextField(hintText: 'Confirm Password', isObscure: true),
-              const SizedBox(height: 40), 
-
+              const SizedBox(height: 32), 
               SizedBox(
-                width: double.infinity,
-                height: 55, 
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1A1A1A),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'Register',
-                    style: TextStyle(
-                      fontFamily: 'OpenSans', 
-                      color: Colors.white, 
-                      fontSize: 16
-                    ),
-                  ),
+                width: double.infinity), 
+                CustomButton
+                (
+                  text: 'Register',
+                  onPressed: () {
+                  },
                 ),
-              ),
+              
               
               const Spacer(), 
               

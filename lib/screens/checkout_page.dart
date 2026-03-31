@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab3/components/custom_button.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -172,23 +173,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
               child: SizedBox(
                 width: double.infinity,
                 height: 55,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF151515), 
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'Pay \$60.00',
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                child: CustomButton
+                (
+                  text: 'Pay \$60.00',
+                  onPressed: () {
+                  },
                 ),
               ),
             ),

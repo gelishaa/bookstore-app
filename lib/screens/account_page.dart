@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab3/components/custom_button.dart';
 import '../components/text_field.dart'; 
 
 class AccountPage extends StatelessWidget {
@@ -56,22 +57,11 @@ class AccountPage extends StatelessWidget {
                         Expanded(
                           child: SizedBox(
                             height: 55,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF1A1A1A),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              onPressed: () {},
-                              child: const Text(
-                                'Edit',
-                                style: TextStyle(
-                                  fontFamily: 'OpenSans',
-                                  color: Colors.white, 
-                                  fontSize: 16
-                                ),
-                              ),
+                            child: CustomButton
+                            (     
+                              text: 'Edit',
+                              onPressed: () {
+                              },
                             ),
                           ),
                         ),

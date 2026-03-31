@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab3/components/custom_button.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -84,23 +85,12 @@ class CartPage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       height: 55,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF1A1A1A),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: const Text(
-                          'Proceed to Checkout',
-                          style: TextStyle(
-                            fontFamily: 'OpenSans',
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
+                      child: CustomButton
+                            (     
+                              text: 'Proceed to Checkout',
+                              onPressed: () {
+                              },
+                            ),
                     ),
                     const SizedBox(height: 30),
                   ],
