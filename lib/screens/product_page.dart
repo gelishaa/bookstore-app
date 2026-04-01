@@ -14,7 +14,9 @@ class ProductScreen extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: const Text(
           'Classics',
@@ -27,7 +29,9 @@ class ProductScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.shopping_cart, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/cart');
+            },
           ),
         ],
       ),
@@ -52,8 +56,8 @@ class ProductScreen extends StatelessWidget {
                 Container(
                   width: 138,
                   height: 214,
-                  decoration: BoxDecoration(
-                    image: const DecorationImage(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
                       image: AssetImage('assets/images/book.png'), 
                       fit: BoxFit.cover,
                     ),
@@ -71,7 +75,6 @@ class ProductScreen extends StatelessWidget {
                       _buildInfoText('Rating', '4.11/5'),
                       const SizedBox(height: 10),
                       
-
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: TextBaseline.alphabetic,
@@ -95,6 +98,7 @@ class ProductScreen extends StatelessWidget {
                       CustomButton(
                         text: 'Add to Cart',
                         onPressed: () {
+                          Navigator.pushNamed(context, '/cart');
                         },
                       ),
                     ],
@@ -137,7 +141,15 @@ class ProductScreen extends StatelessWidget {
           backgroundColor: const Color(0xFFF5F5F5),
           elevation: 0,
           selectedIndex: 0,
-          onDestinationSelected: (int index) {},
+          onDestinationSelected: (int index) {
+            if (index == 0) {
+              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+            } else if (index == 1) {
+              Navigator.pushNamed(context, '/cart');
+            } else if (index == 2) {
+              Navigator.pushNamed(context, '/account');
+            }
+          },
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.home_filled, color: Colors.black),

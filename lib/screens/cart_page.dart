@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lab3/components/custom_button.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
+import '../components/custom_button.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = !kIsWeb && (Platform.isAndroid || Platform.isIOS);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
@@ -14,7 +18,11 @@ class CartPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pop(context);
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+            }
           },
         ),
         title: const Text(
@@ -29,9 +37,10 @@ class CartPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            Expanded(
+            Positioned.fill(
+              top: isMobile ? 0 : 20, 
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
@@ -85,32 +94,16 @@ class CartPage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       height: 55,
-                      child: CustomButton
-                            (     
-                              text: 'Proceed to Checkout',
-                              onPressed: () {
-                              },
-                            ),
+                      child: CustomButton(     
+                        text: 'Proceed to Checkout',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/checkout');
+                        },
+                      ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 100), 
                   ],
                 ),
-              ),
-            ),
-
-            Container(
-              padding: const EdgeInsets.only(top: 15, bottom: 25),
-              decoration: BoxDecoration(
-                color: const Color(0xFFEDEDED),
-                border: Border(top: BorderSide(color: Colors.grey.shade300, width: 1)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(Icons.home, 'Home', false),
-                  _buildNavItem(Icons.shopping_cart, 'Cart', true),
-                  _buildNavItem(Icons.account_box, 'Account', false),
-                ],
               ),
             ),
           ],
@@ -139,38 +132,6 @@ class CartPage extends StatelessWidget {
             fontSize: isBold ? 18 : 16,
             fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
             color: Colors.black,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
-          decoration: isActive
-              ? BoxDecoration(
-                  color: const Color(0xFF1A1A1A),
-                  borderRadius: BorderRadius.circular(20),
-                )
-              : null,
-          child: Icon(
-            icon,
-            color: isActive ? Colors.white : Colors.black87,
-            size: 26,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'OpenSans',
-            fontSize: 13,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
-            color: Colors.black87,
           ),
         ),
       ],

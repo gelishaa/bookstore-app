@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
 import '../components/text_field.dart';
 import '../components/custom_button.dart';
 
@@ -12,6 +14,80 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = !kIsWeb && (Platform.isAndroid || Platform.isIOS);
+
+    Widget content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 50), 
+        
+        const Text(
+          'Please fill your details to signup.',
+          style: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 16, 
+            color: Colors.black87
+          ),
+        ),
+        
+        const SizedBox(height: 35), 
+        
+        const CustomTextField(hintText: 'Username'),
+        const SizedBox(height: 16), 
+        
+        const CustomTextField(hintText: 'Email'),
+        const SizedBox(height: 16),
+        
+        const CustomTextField(hintText: 'Password', isObscure: true),
+        const SizedBox(height: 16),
+        
+        const CustomTextField(hintText: 'Confirm Password', isObscure: true),
+        const SizedBox(height: 32), 
+
+        SizedBox(
+          width: double.infinity,
+          child: CustomButton(
+            text: 'Register',
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+            },
+          ),
+        ),
+        
+        isMobile ? const Spacer() : const SizedBox(height: 100), 
+        
+        Center(
+          child: TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: RichText(
+                text: const TextSpan(
+                  text: 'Already a member? ',
+                  style: TextStyle(
+                    fontFamily: 'OpenSans', 
+                    color: Colors.black87, 
+                    fontSize: 14
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'SignIn',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, 
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
@@ -37,71 +113,11 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 80), 
-              
-              const Text(
-                'Please fill your details to signup.',
-                style: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontSize: 16, 
-                  color: Colors.black87
+          child: isMobile 
+              ? content 
+              : SingleChildScrollView(
+                  child: content,
                 ),
-              ),
-              
-              const SizedBox(height: 35), 
-              
-              const CustomTextField(hintText: 'Username'),
-              const SizedBox(height: 16), 
-              
-              const CustomTextField(hintText: 'Email'),
-              const SizedBox(height: 16),
-              
-              const CustomTextField(hintText: 'Password', isObscure: true),
-              const SizedBox(height: 16),
-              
-              const CustomTextField(hintText: 'Confirm Password', isObscure: true),
-              const SizedBox(height: 32), 
-              SizedBox(
-                width: double.infinity), 
-                CustomButton
-                (
-                  text: 'Register',
-                  onPressed: () {
-                  },
-                ),
-              
-              
-              const Spacer(), 
-              
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0),
-                  child: RichText(
-                    text: const TextSpan(
-                      text: 'Already a member? ',
-                      style: TextStyle(
-                        fontFamily: 'OpenSans', 
-                        color: Colors.black87, 
-                        fontSize: 14
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'SignIn',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold, 
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

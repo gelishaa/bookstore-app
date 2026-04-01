@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
 import 'package:lab3/components/custom_button.dart';
 import '../components/text_field.dart'; 
 
@@ -7,6 +9,8 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = !kIsWeb && (Platform.isAndroid || Platform.isIOS);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
@@ -57,11 +61,9 @@ class AccountPage extends StatelessWidget {
                         Expanded(
                           child: SizedBox(
                             height: 55,
-                            child: CustomButton
-                            (     
+                            child: CustomButton(     
                               text: 'Edit',
-                              onPressed: () {
-                              },
+                              onPressed: () {},
                             ),
                           ),
                         ),
@@ -76,7 +78,9 @@ class AccountPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                              },
                               child: const Text(
                                 'Log out',
                                 style: TextStyle(
@@ -95,57 +99,48 @@ class AccountPage extends StatelessWidget {
                 ),
               ),
             ),
-            
-            Container(
-              padding: const EdgeInsets.only(top: 15, bottom: 25), 
-              decoration: BoxDecoration(
-                color: const Color(0xFFEDEDED), 
-                border: Border(top: BorderSide(color: Colors.grey.shade300, width: 1)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(Icons.home, 'Home', false),
-                  _buildNavItem(Icons.shopping_cart, 'Cart', false),
-                  _buildNavItem(Icons.account_box, 'Account', true), 
-                ],
-              ),
-            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-          decoration: isActive 
-              ? BoxDecoration(
-                  color: const Color(0xFF1A1A1A), 
-                  borderRadius: BorderRadius.circular(20),
-                ) 
-              : null,
-          child: Icon(
-            icon, 
-            color: isActive ? Colors.white : Colors.black87,
-            size: 26,
+  Widget _buildNavItem(BuildContext context, IconData icon, String label, bool isActive, String routeName) {
+    return GestureDetector(
+      onTap: () {
+        if (!isActive) {
+          Navigator.pushReplacementNamed(context, routeName);
+        }
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+            decoration: isActive 
+                ? BoxDecoration(
+                    color: const Color(0xFF1A1A1A), 
+                    borderRadius: BorderRadius.circular(20),
+                  ) 
+                : null,
+            child: Icon(
+              icon, 
+              color: isActive ? Colors.white : Colors.black87,
+              size: 26,
+            ),
           ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'OpenSans',
-            fontSize: 12,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
-            color: Colors.black87,
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 13,
+              fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
+              color: Colors.black87,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
